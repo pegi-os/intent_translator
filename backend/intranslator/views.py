@@ -79,6 +79,7 @@ def upload_file(request):
                 context_attributes=data['context_attributes'],
                 target_metrics=data['target_metrics'],
                 priority=data['priority'],
+                location=data['location'],
                 observation_period=data['observation_period'],
                 report_reference=data['report_reference']
             )
