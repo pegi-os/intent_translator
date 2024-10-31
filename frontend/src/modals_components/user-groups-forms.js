@@ -161,7 +161,7 @@ function Usergroupsform({mode}) {
                     setFormData({ ...formData, context_attributes: updatedContextAttributes });
                   }}
               />
-              SDV_002
+              SDV_003
             </label>
           </div>
         </div><br></br>
