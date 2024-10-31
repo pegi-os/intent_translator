@@ -13,7 +13,7 @@ function Usergroupsform({mode}) {
         context_attributes: [{ contextAttribute: 'TargetSDV', contextCondition: 'IS_EQUAL_TO', contextValueRange: [] }],
         target_metrics: [{ targetName: 'Speed', targetCondition: 'IS_REPORTED', targetValueRange: '' }],
         priority: '',
-        location: { latitude: '', longitude: '' },
+        location: '',
         observation_period: '',
         report_reference: ''
 
@@ -39,8 +39,7 @@ function Usergroupsform({mode}) {
         formData.object_type &&
         formData.context_attributes[0].contextValueRange.length > 0 &&
         formData.priority &&
-        formData.location.latitude &&
-        formData.location.longitude &&
+        formData.location &&
         formData.observation_period &&
         formData.report_reference
       );
@@ -188,27 +187,12 @@ function Usergroupsform({mode}) {
           </select>
         </div><br></br>
         <div>
-          <label>Location (GPS Coordinates, required)</label>
-          <div>
-            <label>Latitude:</label>
-            <input
-              type="text"
-              name="latitude"
-              value={formData.location.latitude}
-              onChange={(e) => setFormData({ ...formData, location: { ...formData.location, latitude: e.target.value } })}
-              placeholder="Enter Latitude"
-            />
-          </div>
-          <div>
-            <label>Longitude:</label>
-            <input
-              type="text"
-              name="longitude"
-              value={formData.location.longitude}
-              onChange={(e) => setFormData({ ...formData, location: { ...formData.location, longitude: e.target.value } })}
-              placeholder="Enter Longitude"
-            />
-          </div>
+          <label>Location (GPS Coordinates system, required)</label>
+          <select name="observation_period" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })}>
+            <option value="">Select Observation Period</option>
+            <option value="Geographic Coordinate System">Geographic Coordinate System</option>
+            <option value="Cartesian Coordinate System">Cartesian Coordinate System</option>
+          </select>
         </div><br></br>
         <div>
           <label>Observation Period (Integer, in seconds, required)</label>
