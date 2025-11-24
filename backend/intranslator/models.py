@@ -8,7 +8,7 @@ class Intent(models.Model):
     context_attributes = models.JSONField()
     target_metrics = models.JSONField()
     priority = models.CharField(max_length=50)
-    location = models.CharField(max_length=50)
+    location = models.CharField(max_length=50, null=True, blank=True)  # 수정됨
     observation_period = models.CharField(max_length=50)
     report_reference = models.CharField(max_length=255)
 

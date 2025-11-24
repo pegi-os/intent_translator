@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import Usermodal from '../modals_components/usermodal';
 import Devicemodal from '../modals_components/devicemodal';
+import NaturalModal from '../modals_components/naturalmodal';
 import Locationmodal from '../modals_components/locationmodal';
 import Urlmodal from '../modals_components/urlmodal';
 import './registration.css'
@@ -20,9 +21,11 @@ export default function Registration(props) {
   const [openLocationModal, setOpenLocationModal] = useState(false)
 
   // variables for the URL group modal
-
   const [openUrlModal, setOpenUrlModal] = useState(false)
 
+  // variables for natural language intent modal
+const [openNaturalModal, setOpenNaturalModal] = useState(false);
+  
 
   return (
     <div className='registration'>
@@ -39,6 +42,9 @@ export default function Registration(props) {
         <button className={props.mode === 'dark' ? 'dark-button' : 'light-button'} onClick={() => {setOpenUrlModal(true);}}>URL Groups</button>
         {openUrlModal && <Urlmodal closeUrlModal={setOpenUrlModal} mode={props.mode}/>}
          */}
+
+         <button className={props.mode === 'dark' ? 'dark-button' : 'light-button'}  onClick={() => { setOpenNaturalModal(true); }}> Natural-Intent </button>
+         {openNaturalModal &&  <NaturalModal closeNaturalModal={setOpenNaturalModal}mode={props.mode} />}
     </div>
   )
 }
