@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'intranslator'
-
+    'intranslator',
+    'intentString',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +58,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React 앱이 실행 중인 도메인
+    "http://localhost:3001",  # React 앱이 실행 중인 도메인
     # "http://115.145.178.185", # 필요에 따라 추가
 ]
 
@@ -88,9 +89,9 @@ WSGI_APPLICATION = 'intranslator.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'intent',
-        'USER': 'django',
-        'PASSWORD': 'shim35990!',
+        'NAME': 'IntentDB',
+        'USER': 'intent',
+        'PASSWORD': 'intent',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
