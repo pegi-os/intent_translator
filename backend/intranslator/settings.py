@@ -88,8 +88,8 @@ WSGI_APPLICATION = 'intranslator.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'intent',
-        'USER': 'django',
+        'NAME': 'test',
+        'USER': 'root',
         'PASSWORD': 'shim35990!',
         'HOST': '127.0.0.1',
         'PORT': '3306',
