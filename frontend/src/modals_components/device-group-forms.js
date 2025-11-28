@@ -3,26 +3,44 @@ import { useState } from 'react';
 import './group-forms.css'
 
 function Devicegroupsform() {
-
+    // variables for the result
+    const [convertedResult, setConvertedResult] = useState("");
 
     // variables for the IPv4 and IPv6 dropdowns    
     const [moreIPv4, setMoreIPv4] = useState(false);
     const [moreIPv6, setMoreIPv6] = useState(false);
 
-
-
     // variables for the registration validation 
     const [form, setForm] = useState({'name':null,"mac-address":null,"range-ipv4-address":{"start":null,"end":null},"range-ipv6-address":{"start":null,"end":null}});
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         
         console.log(form)
         
-    }
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/NetworkIntent/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                user: "frontend_test",
+                intent: form,
+                timestamp: new Date().toISOString(),
+                }),
+            });
 
-
+            if (response.ok) {
+                const data = await response.json();
+                setConvertedResult(JSON.stringify(data, null, 2));
+            } else {
+                alert("Failed to convert intent.");
+            }
+            } catch (error) {
+            console.error(error);
+            alert("Server connection failed.");
+            }
+        }
 
   return (
     <div style={{margin:"20px"}}>
@@ -102,7 +120,27 @@ function Devicegroupsform() {
                     autoComplete='off'
                     onChange={(e) => form['range-ipv6-address']['end'] = e.target.value} />
                 </div>
+                {convertedResult && (
+                    <div className="converted-output">
+                    <h3>Converted Output</h3>
+                    <pre
+                        style={{
+                        background: "#eee",
+                        padding: "15px",
+                        borderRadius: "8px",
+                        marginTop: "20px",
+                        maxWidth: "800px",
+                        maxHeight: "200px",
+                        overflow: "auto",
 
+                        whiteSpace: "pre-wrap",
+                        wordBreak: "break-word",
+                        }}
+                    >
+                        {convertedResult}
+                    </pre>
+                    </div>
+                )}
             </div>
 
             <br></br>

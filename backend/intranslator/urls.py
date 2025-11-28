@@ -21,7 +21,10 @@ from . import views
 from intentString import views as intent_views
 
 router = DefaultRouter()
-router.register(r'intentString', intent_views.IntentStringViewSet, 'intentString')
+# Natural Intent용
+router.register(r'NaturalIntent', intent_views.NaturalIntentViewSet, 'NaturalIntent')
+# Network Intent용
+router.register(r'NetworkIntent', intent_views.NetworkIntentViewSet, 'NetworkIntent') 
 
 urlpatterns = [
     path('admin/', admin.site.urls),

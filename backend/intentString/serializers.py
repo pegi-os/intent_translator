@@ -1,7 +1,12 @@
 from rest_framework.serializers import ModelSerializer
-from .models import IntentString
+from .models import NaturalIntent, NetworkIntent
 
-class IntentStringSerializer(ModelSerializer):
+class NaturalIntentSerializer(ModelSerializer):
       class Meta:
-            model = IntentString
+            model = NaturalIntent
             fields = ['user', 'intent', 'timestamp']
+
+class NetworkIntentSerializer(ModelSerializer):
+      class Meta:
+            model = NetworkIntent
+            fields = '__all__'
