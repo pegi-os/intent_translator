@@ -9,12 +9,12 @@ source ./myenv/bin/activate # for Mac
 ```
 ```bash
 # Run Frontend
-cd ./frontend
+cd frontend
 npm start
 ```
 ```bash
 # Run Backend
-cd ./backend
+cd backend
 python manage.py runserver
 ```
 
