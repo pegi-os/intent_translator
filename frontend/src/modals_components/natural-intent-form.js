@@ -20,7 +20,7 @@ function NaturalIntentForm({ mode, closeNaturalModal }) {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/intentString/", {
+      const response = await fetch("http://127.0.0.1:8000/api/NaturalIntent/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -102,6 +102,10 @@ function NaturalIntentForm({ mode, closeNaturalModal }) {
               padding: "15px",
               borderRadius: "8px",
               marginTop: "20px",
+              maxWidth: "800px",
+
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
             }}
           >
             {convertedResult}
