@@ -4,8 +4,10 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .serializers import NaturalIntentSerializer, NetworkIntentSerializer
 from .models import NaturalIntent, NetworkIntent
+from .services.intentToPolicy import map_intent_struct_to_policy, generate_yaml
 import requests
 import json
+import yaml
 
 # Create your views here.
 def test(request):
@@ -34,11 +36,19 @@ class NaturalIntentViewSet(viewsets.ModelViewSet):
         # 3) 외부 서버로 전송
         try:
             response = requests.post(external_url, json=payload, timeout=5)
-            # external_response = response.text
             external_response = json.loads(response.text) # 보기 편하게 json 형태로 파싱
+            
+            # intent -> policy
+            intent = external_response.get("Intent")
+            triple = external_response.get("KGTriple")
+            confidence = external_response.get("confidence", 1.0)
+            
+            policy = map_intent_struct_to_policy(intent, triple, confidence)
+            yaml_result = generate_yaml(policy) # yaml 생성
+
+            print(yaml_result)
         except Exception as e:
             external_response = f"Failed to send: {e}"
-
 
         # 4) Django 클라이언트에게 반환할 내용
         return Response({
@@ -46,6 +56,7 @@ class NaturalIntentViewSet(viewsets.ModelViewSet):
             "sent_to": external_url,         # 보낸 주소
             "external_payload": payload,     # 실제 전송한 데이터
             "external_response": external_response,  # 외부 서버 응답
+            "yaml": yaml_result,                     # policy 전환
         }, status=status.HTTP_201_CREATED)
     
 class NetworkIntentViewSet(viewsets.ModelViewSet):
