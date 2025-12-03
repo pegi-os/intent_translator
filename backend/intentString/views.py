@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .serializers import NaturalIntentSerializer, NetworkIntentSerializer
 from .models import NaturalIntent, NetworkIntent
 from .services.intentToPolicy import map_intent_struct_to_policy, generate_yaml
+from .models import PolicyIntent
+from .serializers import PolicyIntentSerializer
 import requests
 import json
 import yaml
@@ -42,28 +44,36 @@ class NaturalIntentViewSet(viewsets.ModelViewSet):
             intent = external_response.get("Intent")
             triple = external_response.get("KGTriple")
             confidence = external_response.get("confidence", 1.0)
-            
+    
             policy = map_intent_struct_to_policy(intent, triple, confidence)
             yaml_result = generate_yaml(policy) # yaml 생성
+
+            PolicyIntent.objects.create(
+        action=intent.get("Action", ""),
+        expectation_object=intent.get("ExpectationObject", ""),
+        expectation_target=intent.get("ExpectationTarget", ""),
+        head=triple.get("head", ""),
+        relation=triple.get("relation", ""),
+        tail=triple.get("tail", ""),
+    )
 
             
         except Exception as e:
             external_response = f"Failed to send: {e}"
 
-# YAML 결과를 전송
-        try: #192.168.50.57
-            next_url = "http://192.168.50.57"   # 원하는 URL
-            send_payload = {"yaml": yaml_result}
+# # YAML 결과를 전송
+#         try: #192.168.50.57   ,  18.129
+#             next_url = "http://192.168.50.57"   # 원하는 URL
+#             send_payload = {"yaml": yaml_result}
 
-            print("\n===== [DEBUG] Sending YAML to next local server =====")
-            print(f"URL: {next_url}")
-            print(f"Payload: {send_payload}")
-            print("=======================================================\n")
+#             print(f"URL: {next_url}")
+#             print(f"Payload: {send_payload}")
+#             print("=======================================================\n")
 
-            forward_res = requests.post(next_url, json=send_payload, timeout=5)
-            forward_response = forward_res.text
-        except Exception as e:
-            forward_response = f"Failed to forward YAML: {e}"        
+#             forward_res = requests.post(next_url, json=send_payload, timeout=5)
+#             forward_response = forward_res.text
+#         except Exception as e:
+#             forward_response = f"Failed to forward YAML: {e}"        
 
 
         # 4) Django 클라이언트에게 반환할 내용
