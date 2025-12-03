@@ -20,12 +20,13 @@ function NaturalIntentForm({ mode, closeNaturalModal }) {
     }
 
     try {
-      const response = await fetch("http://172.21.195.26:8000/api/convert_intent/", {
+      const response = await fetch("http://127.0.0.1:8000/api/NaturalIntent/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          input_type: "text",
-          natural_text: inputText,
+          user: "frontend_test",
+          intent: inputText,
+          timestamp: new Date().toISOString(),
         }),
       });
 
@@ -101,6 +102,10 @@ function NaturalIntentForm({ mode, closeNaturalModal }) {
               padding: "15px",
               borderRadius: "8px",
               marginTop: "20px",
+              maxWidth: "800px",
+
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
             }}
           >
             {convertedResult}

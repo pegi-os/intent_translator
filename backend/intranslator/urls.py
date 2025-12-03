@@ -16,10 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
+from intentString import views as intent_views
+
+router = DefaultRouter()
+# Natural Intent용
+router.register(r'NaturalIntent', intent_views.NaturalIntentViewSet, 'NaturalIntent')
+# Network Intent용
+router.register(r'NetworkIntent', intent_views.NetworkIntentViewSet, 'NetworkIntent') 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/upload/', views.upload_file, name='upload_file'),
-    path('api/intents/', views.get_intents, name='get_intents'),
-    path('',views.home, name='home')
+    # path('api/upload/', views.upload_file, name='upload_file'),
+    # path('api/intents/', views.get_intents, name='get_intents'),
+    # path('',views.home, name='home'),
+    path('api/', include(router.urls))
 ]
