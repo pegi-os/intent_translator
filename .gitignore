@@ -1,0 +1,61 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+env/
+.myenv/
+.venv/
+ENV/
+
+# Django stuff
+*.log
+staticfiles/
+media/
+db.sqlite3
+
+# If using dotenv
+.env
+*.env
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Local settings
+local_settings.py
+
+# Migrations (optional, if you want to ignore initial migrations)
+# */migrations/*
+# !*/migrations/__init__.py
