@@ -87,21 +87,24 @@ WSGI_APPLICATION = 'intranslator.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
-        'USER': 'root',
-        'PASSWORD': 'shim35990!',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-            'use_unicode': True
-        }
-    }
-}
 
+#shim local에서 사용하던 database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'test',
+#         'USER': 'root',
+#         'PASSWORD': 'shim35990!',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',
+#             'use_unicode': True
+#         }
+#     }
+# }
+#여기에 본인 database 값넣으면 됨
+DATABASES = {} 
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
