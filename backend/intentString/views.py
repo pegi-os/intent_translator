@@ -82,7 +82,7 @@ class NaturalIntentViewSet(viewsets.ModelViewSet):
             "sent_to": external_url,         # 보낸 주소
             "external_payload": payload,     # 실제 전송한 데이터
             "external_response": external_response,  # 외부 서버 응답
-            "yaml": yaml_result,                     # policy 전환
+           #  "yaml": yaml_result,                     # policy 전환
         }, status=status.HTTP_201_CREATED)
     
 class NetworkIntentViewSet(viewsets.ModelViewSet):
