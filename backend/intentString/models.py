@@ -8,7 +8,6 @@ class NaturalIntent(models.Model):
 
       def __str__(self):
             return self.user + ":" + self.intent
-      
 
 class NetworkIntent(models.Model):
       name = models.CharField(max_length=100, null=True, blank=True)
@@ -52,3 +51,4 @@ class IntentInference(models.Model):
 
       def __str__(self):
             return f"IntentRecord #{self.pk}"
+      

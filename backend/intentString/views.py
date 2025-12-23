@@ -75,6 +75,14 @@ class NaturalIntentViewSet(viewsets.ModelViewSet):
         print(yaml_result)
         print("=======================================================\n")
 
+        # 추가 예정 ============================================================================
+        # try:    
+        #     response = requests.post("edge server", json=yaml_result, timeout=5)
+        #     edge_response = json.loads(response.text) # 보기 편하게 json 형태로 파싱
+        # except Exception as e:
+        #     external_response = f"Failed to send: {e}"
+        # 추가 예정 ============================================================================
+
         # 6) Django 클라이언트에게 반환할 내용
         return Response({
             "saved": serializer.data,        # 백엔드에 저장된 내용

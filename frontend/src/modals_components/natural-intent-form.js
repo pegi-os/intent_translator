@@ -102,7 +102,7 @@ function NaturalIntentForm({ mode, closeNaturalModal }) {
               padding: "15px",
               borderRadius: "8px",
               marginTop: "20px",
-              maxWidth: "800px",
+              maxWidth: "600px",
               maxHeight: "200px",
               overflow: "auto",
 
