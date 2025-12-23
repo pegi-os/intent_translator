@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import NaturalIntent, NetworkIntent, PolicyIntent
+from .models import NaturalIntent, NetworkIntent, ApplicationIntent, PolicyIntent
 
 class NaturalIntentSerializer(ModelSerializer):
       class Meta:
@@ -11,7 +11,12 @@ class NetworkIntentSerializer(ModelSerializer):
             model = NetworkIntent
             fields = '__all__'
 
+class ApplicationIntentSerializer(ModelSerializer):
+     class Meta:
+            model = ApplicationIntent
+            fields = '__all__'
+
 class PolicyIntentSerializer(ModelSerializer):
-    class Meta:
-        model = PolicyIntent
-        fields = '__all__'
+      class Meta:
+            model = PolicyIntent
+            fields = '__all__'

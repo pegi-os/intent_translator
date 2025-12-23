@@ -2,11 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .serializers import NaturalIntentSerializer, NetworkIntentSerializer
-from .models import NaturalIntent, NetworkIntent
+from .serializers import NaturalIntentSerializer, NetworkIntentSerializer, ApplicationIntentSerializer, PolicyIntentSerializer
+from .models import NaturalIntent, NetworkIntent, ApplicationIntent, PolicyIntent
 from .services.intentToPolicy import map_intent_struct_to_policy, generate_yaml
-from .models import PolicyIntent
-from .serializers import PolicyIntentSerializer
 import requests
 import json
 from django.conf import settings
@@ -16,6 +14,7 @@ import os
 # Create your views here.
 def test(request):
       return HttpResponse("Test")
+
 # 파일 저장 수행하는 함수
 def safe_write_txt(filename, content):
     try:
@@ -54,7 +53,6 @@ class NaturalIntentViewSet(viewsets.ModelViewSet):
     serializer_class = NaturalIntentSerializer
 
     def create(self, request, *args, **kwargs):
-
         # 1) 프론트에서 받은 값을 serializer로 검증
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -81,7 +79,6 @@ class NaturalIntentViewSet(viewsets.ModelViewSet):
 
             policy = map_intent_struct_to_policy(intent, triple, confidence)
             yaml_result = generate_yaml(policy)
-
 
             safe_write_txt(
                 f"policy_external.txt",
@@ -152,6 +149,65 @@ class NetworkIntentViewSet(viewsets.ModelViewSet):
             external_response = json.loads(response.text)
         except Exception as e:
             external_response = f"Failed to send: {e}"
+
+        return Response({
+            "saved": serializer.data,
+            "sent_to": external_url,
+            "external_payload": payload,
+            "external_response": external_response,
+        }, status=status.HTTP_201_CREATED)
+    
+class ApplicationIntentViewSet(viewsets.ModelViewSet):
+    queryset = NetworkIntent.objects.all()
+    serializer_class = ApplicationIntentSerializer
+
+    def create(self, request, *args, **kwargs):
+
+        data = request.data
+        obj = {
+            "user_label": data.get("user_label", ""),
+            "expectation_id": data.get("expectation_id", ""),
+            "expectation_verb": data.get("expectation_verb", ""),
+            "object_type": data.get("object_type", ""),
+            
+            "context_attribute" : data["context_attributes"][0].get("contextAttribute", ""),
+            "context_condition" : data["context_attributes"][0].get("contextCondition", ""),
+            "context_targer_id" : data["context_attributes"][0].get("contextValueRange", ""),
+
+            "target_name" : data["target_metrics"][0].get("targetName",""),
+            "target_condition" : data["target_metrics"][0].get("targetCondition",""),
+            "target_value" : data["target_metrics"][0].get("targetValueRange",""),
+
+            "priority": data.get("priority", ""),
+            "location": data.get("location", ""),
+            "observation_period": data.get("observation_period", ""),
+            "report_reference": data.get("report_reference", ""),
+        }
+
+        serializer = self.get_serializer(data=obj)
+        serializer.is_valid(raise_exception=True)
+
+        # DB save optional
+        intent_obj = safe_save(serializer)
+
+        payload = {"intent": serializer.data}
+        external_url = "http://115.145.179.159:5050/infer"
+
+        print("\n===== [DEBUG] Sending payload to external server =====")
+        print(f"URL: {external_url}")
+        print(f"Payload: {payload}")
+        print("=======================================================\n")
+
+        try:
+            response = requests.post(external_url, json=payload, timeout=5)
+            external_response = json.loads(response.text)
+        except Exception as e:
+            external_response = f"Failed to send: {e}"
+
+        print("\n===== [DEBUG] External Response =====")
+        print(f"External Response: {external_response}")
+        print("=======================================================\n")
+
 
         return Response({
             "saved": serializer.data,

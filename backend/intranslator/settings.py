@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'intranslator',
     'intentString',
-     "django_extensions",
+    "django_extensions",
 
 ]
 
@@ -104,21 +104,21 @@ WSGI_APPLICATION = 'intranslator.wsgi.application'
 #     }
 # }
 #여기에 본인 database 값넣으면 됨
-DATABASES = {} 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mysql',  #데이터베이스 네임
-#         'USER': 'root', #계정
-#         'PASSWORD': '1234', #패스워드
-#         'HOST': 'database.c18nemu8atrp.ap-northeast-2.rds.amazonaws.com', #공백으로 냅두면 default localhost
-#         'PORT': '3306', #공백으로 냅두면 default 3306
-#         'OPTIONS': {
-#             'charset': 'utf8mb4',
-#             'use_unicode': True
-#         }
-#     }
-# }
+# DATABASES = {} 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'intentDB',  #데이터베이스 네임
+        'USER': 'intent', #계정
+        'PASSWORD': 'intent', #패스워드
+        'HOST': '', #공백으로 냅두면 default localhost
+        'PORT': '3306', #공백으로 냅두면 default 3306
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'use_unicode': True
+        }
+    }
+}
 
 
 # Password validation

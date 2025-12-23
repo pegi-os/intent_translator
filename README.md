@@ -15,7 +15,7 @@ npm start
 ```bash
 # Run Backend
 cd backend
-python manage.py runserver
+python ./manage.py runserver
 ```
 
 ## Backend - Django Migration

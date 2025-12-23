@@ -18,10 +18,28 @@ class NetworkIntent(models.Model):
       ipv4_end = models.GenericIPAddressField(protocol='IPv4', null=True, blank=True)
       ipv6_start = models.GenericIPAddressField(protocol='IPv6', null=True, blank=True)
       ipv6_end = models.GenericIPAddressField(protocol='IPv6', null=True, blank=True)
-      
 
       def __str__(self):
             return self.name + "/" + self.mac_address + self.ipv4_start + "~" + self.ipv4_end + "/" + self.ipv6_start + "~" + self.ipv6_end
+
+class ApplicationIntent(models.Model):
+      user_label = models.CharField(max_length=30, null=True, blank=True)
+      expectation_id = models.CharField(max_length=10, null=True, blank=True)
+      expectation_verb = models.CharField(max_length=10, null=True, blank=True)
+      object_type = models.CharField(max_length=10, null=True, blank=True)
+
+      context_attribute = models.CharField(max_length=30, null=True, blank=True)
+      context_condition = models.CharField(max_length=30, null=True, blank=True)
+      context_targer_id = models.JSONField(null=True, blank=True)
+
+      target_name = models.CharField(max_length=30, null=True, blank=True)
+      target_condition = models.CharField(max_length=30, null=True, blank=True)
+      target_value = models.IntegerField(null=True, blank=True)
+
+      priority = models.IntegerField(null=True, blank=True)
+      location = models.CharField(max_length=30, null=True, blank=True)
+      observation_period = models.IntegerField(null=True, blank=True)
+      report_reference = models.CharField(max_length=30, null=True, blank=True)
 
 class PolicyIntent(models.Model):
     action = models.CharField(max_length=100)

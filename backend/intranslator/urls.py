@@ -25,6 +25,9 @@ router = DefaultRouter()
 router.register(r'NaturalIntent', intent_views.NaturalIntentViewSet, 'NaturalIntent')
 # Network Intent용
 router.register(r'NetworkIntent', intent_views.NetworkIntentViewSet, 'NetworkIntent') 
+# Applciation Intent용
+router.register(r'ApplicationIntent', intent_views.ApplicationIntentViewSet, 'ApplicationIntent') 
+
 router.register(r'PolicyIntent', intent_views.NaturalIntentViewSet, 'PolicyIntent')
 
 urlpatterns = [

@@ -16,7 +16,6 @@ function Usergroupsform({mode}) {
         location: '',
         observation_period: '',
         report_reference: ''
-
       });
 
     // variables and functions to handle the submit button and connect to MONGODB
@@ -50,7 +49,7 @@ function Usergroupsform({mode}) {
         console.log(formData)
         try {
           // Send formData (JSON) to Django backend
-          const response = await fetch('http://127.0.0.1:8000/api/upload/', {
+          const response = await fetch('http://127.0.0.1:8000/api/ApplicationIntent/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
